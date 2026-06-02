@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/dashboard
+Disallow: /admin/events
+Disallow: /admin/team
+Disallow: /admin/applications
+
+Sitemap: https://acmshivalik.org/sitemap.xml

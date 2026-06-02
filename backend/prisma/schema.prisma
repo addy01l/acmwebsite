@@ -1,0 +1,124 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Member {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  phone        String
+  branch       String
+  year         Int
+  enrollmentNo String   @unique
+  createdAt    DateTime @default(now())
+
+  @@map("members")
+}
+
+model Event {
+  id          String         @id @default(uuid())
+  title       String
+  description String
+  category    String // Hackathons, Workshops, Seminars, Coding Contests, Research Events
+  date        DateTime
+  venue       String
+  banner      String
+  regLink     String?
+  isUpcoming  Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  gallery     EventGallery[]
+
+  @@map("events")
+}
+
+model EventGallery {
+  id        String   @id @default(uuid())
+  imageUrl  String
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@map("event_gallery")
+}
+
+model Domain {
+  id          String   @id @default(uuid())
+  name        String   @unique // Tech, Competitive Programming, etc.
+  description String
+  skills      String // Prisma scalar array not supported by SQLite
+  teamLeads   String
+  icon        String // Lucide icon reference name
+  createdAt   DateTime @default(now())
+
+  @@map("domains")
+}
+
+model TeamMember {
+  id         String   @id @default(uuid())
+  name       String
+  position   String
+  department String
+  category   String // Faculty Coordinator, Executive Board, Technical Team, Design Team, Management Team, Research Team
+  photo      String
+  linkedin   String?
+  github     String?
+  email      String?
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@map("team_members")
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("contact_messages")
+}
+
+model MembershipApplication {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  phone        String
+  branch       String
+  year         Int
+  enrollmentNo String   @unique
+  skills       String
+  resumeUrl    String
+  status       String   @default("pending") // pending, approved, rejected
+  createdAt    DateTime @default(now())
+
+  @@map("membership_applications")
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  @@map("newsletter_subscribers")
+}
