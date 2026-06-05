@@ -1,23 +1,21 @@
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import axios from 'axios';
 
-export const fetchFromApi = async (endpoint: string, options: RequestInit = {}) => {
-  const token = typeof window !== 'undefined' ? localStorage.getItem('acm_admin_token') : null;
-  
-  const headers: HeadersInit = {
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/';
+
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
     'Content-Type': 'application/json',
-    ...(token && { 'Authorization': `Bearer ${token}` }),
-    ...options.headers,
-  };
+  },
+});
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    ...options,
-    headers,
-  });
+// We can add interceptors here to inject tokens later
+// api.interceptors.request.use(config => {
+//   const token = localStorage.getItem('token');
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'API request failed');
-  }
-
-  return response.json();
-};
+export default api;
