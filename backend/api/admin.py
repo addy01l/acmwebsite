@@ -6,7 +6,7 @@ from .models import (
 
 @admin.register(Member)
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ('name', 'enrollment_no', 'email', 'domain', 'role')
+    list_display = ('name', 'enrollment_no', 'email', 'branch', 'year')
     search_fields = ('name', 'enrollment_no', 'email')
 
 @admin.register(Event)
