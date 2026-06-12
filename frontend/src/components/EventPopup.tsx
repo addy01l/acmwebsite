@@ -18,7 +18,7 @@ const EventPopup = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch('http://127.0.0.1:8000/api/events/?is_upcoming=true');
+        const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://acmwebsite.onrender.com/api/' : 'http://127.0.0.1:8000/api/')}events/?is_upcoming=true`);
         const data = await res.json();
         
         if (data && data.length > 0) {

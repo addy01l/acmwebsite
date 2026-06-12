@@ -19,7 +19,7 @@ const Events = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/events/?is_upcoming=true')
+    fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://acmwebsite.onrender.com/api/' : 'http://127.0.0.1:8000/api/')}events/?is_upcoming=true`)
       .then(res => res.json())
       .then(data => {
         setEvents(data);

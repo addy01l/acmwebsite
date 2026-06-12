@@ -14,7 +14,7 @@ const AdminLogin = () => {
     setError('');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/token/', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://acmwebsite.onrender.com/api/' : 'http://127.0.0.1:8000/api/')}token/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -30,7 +30,7 @@ const EventRegistration = () => {
 
   useEffect(() => {
     // Fetch Event Details
-    fetch(`http://127.0.0.1:8000/api/events/${id}/`)
+    fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://acmwebsite.onrender.com/api/' : 'http://127.0.0.1:8000/api/')}events/${id}/`)
       .then(res => res.json())
       .then(data => setEvent(data))
       .catch(err => console.error(err));
@@ -58,7 +58,7 @@ const EventRegistration = () => {
     }
 
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/event-registrations/`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://acmwebsite.onrender.com/api/' : 'http://127.0.0.1:8000/api/')}event-registrations/`, {
         method: 'POST',
         body: formData,
       });
