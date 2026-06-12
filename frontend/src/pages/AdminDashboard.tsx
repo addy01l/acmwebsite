@@ -28,7 +28,7 @@ interface Registration {
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'events' | 'registrations'>('events');
+  const [activeTab, setActiveTab] = useState<'stats' | 'events' | 'registrations'>('events');
   const [events, setEvents] = useState<Event[]>([]);
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [selectedEventId, setSelectedEventId] = useState<string>('');
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
   const fetchStats = async () => {
     const token = localStorage.getItem('admin_token');
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/admin/stats/', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/'}admin/stats/`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/events/');
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/'}events/`);
       const data = await res.json();
       setEvents(data);
     } catch (err) {
@@ -83,7 +83,7 @@ const AdminDashboard = () => {
   const fetchRegistrations = async () => {
     const token = localStorage.getItem('admin_token');
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/event-registrations/', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/'}event-registrations/`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -104,7 +104,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     const token = localStorage.getItem('admin_token');
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/events/', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/'}events/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ const AdminDashboard = () => {
     
     const token = localStorage.getItem('admin_token');
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/events/${id}/`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/'}events/${id}/`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
