@@ -9,9 +9,7 @@ const About = () => {
         <span className="label-mono" style={{ color: 'var(--accent-primary)', marginBottom: '10px', display: 'block' }}>01 — The Story</span>
         <h1 className="section-title">About <span className="text-gradient"><GlitchText text="ACM Shivalik" /></span></h1>
         <p style={{ color: 'var(--text-secondary)', maxWidth: '800px', margin: '0 auto', fontSize: '18px' }}>
-          We are a vibrant community of passionate learners, innovators, and tech enthusiasts. 
-          As the official student chapter of the Association for Computing Machinery at Shivalik College of Engineering, 
-          we bridge the gap between academic learning and real-world technological challenges.
+          We aim at uniting the computing fraternity at Shivalik College under one tag and allowing the students to learn together and share their knowledge to cater the interests of the individuals as well as the institute as a whole. We organize a plethora of events which cover most of the fields of the computer science domain like hackathons, guest lectures, workshops, coding contests etc. which give the students an exposure to the competitive computing world as well as allow them to understand the advancements going on in the computing sphere worldwide.
         </p>
       </div>
 

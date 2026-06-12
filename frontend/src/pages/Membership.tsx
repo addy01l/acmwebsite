@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
 import api from '../utils/api';
 
 const Membership = () => {
@@ -49,6 +50,7 @@ const Membership = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
+      toast.success('Application Submitted Successfully!');
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', branch: '', year: '', enrollment_no: '', skills: '' });
       setResume(null);
@@ -56,7 +58,9 @@ const Membership = () => {
     } catch (err: any) {
       console.error(err);
       setStatus('error');
-      setErrorMsg(err.response?.data?.detail || 'An error occurred. Please ensure all fields are correct.');
+      const msg = err.response?.data?.detail || 'An error occurred. Please ensure all fields are correct.';
+      setErrorMsg(msg);
+      toast.error(msg);
     }
   };
 

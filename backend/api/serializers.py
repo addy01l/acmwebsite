@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Member, Event, EventGallery, Domain, TeamMember, ContactMessage, MembershipApplication, NewsletterSubscriber
+from .models import Member, Event, EventGallery, Domain, TeamMember, ContactMessage, MembershipApplication, NewsletterSubscriber, EventRegistration
 
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,4 +41,9 @@ class MembershipApplicationSerializer(serializers.ModelSerializer):
 class NewsletterSubscriberSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsletterSubscriber
+        fields = '__all__'
+
+class EventRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventRegistration
         fields = '__all__'

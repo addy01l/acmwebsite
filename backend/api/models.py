@@ -25,6 +25,12 @@ class Event(models.Model):
     banner = models.ImageField(upload_to='events/', null=True, blank=True)
     reg_link = models.URLField(max_length=500, blank=True, null=True)
     is_upcoming = models.BooleanField(default=True)
+    
+    # New fields for Registration System
+    ticket_price = models.IntegerField(default=0, help_text="Amount in INR. 0 for free events.")
+    payment_details = models.CharField(max_length=255, blank=True, null=True, help_text="UPI ID or Payment Link")
+    custom_form_fields = models.JSONField(default=list, blank=True, help_text="Array of objects defining custom questions, e.g. [{'type': 'text', 'question': 'T-Shirt Size?', 'required': true}]")
+    
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -35,6 +41,26 @@ class EventGallery(models.Model):
     event = models.ForeignKey(Event, related_name='gallery', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='event_gallery/')
     created_at = models.DateTimeField(auto_now_add=True)
+
+class EventRegistration(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending Verification'),
+        ('verified', 'Verified'),
+        ('rejected', 'Rejected'),
+    )
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    event = models.ForeignKey(Event, related_name='registrations', on_delete=models.CASCADE)
+    applicant_name = models.CharField(max_length=255)
+    applicant_email = models.EmailField()
+    applicant_phone = models.CharField(max_length=20)
+    custom_answers = models.JSONField(default=dict, blank=True)
+    payment_screenshot = models.ImageField(upload_to='payment_screenshots/', null=True, blank=True)
+    payment_status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.applicant_name} - {self.event.title}"
 
 class Domain(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

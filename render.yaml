@@ -1,0 +1,46 @@
+version: "1"
+
+services:
+  # PostgreSQL Database
+  - type: pgo
+    name: acm-db
+    databaseName: acmwebsite
+    user: acmuser
+    plan: free
+
+  # Django Backend
+  - type: web
+    name: acm-backend
+    env: python
+    rootDir: backend
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: acm-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      # The * allows Render's dynamically generated hostname to work out of the box.
+      - key: ALLOWED_HOSTS
+        value: "*"
+      # IMPORTANT: Update this in the Render Dashboard with your actual frontend URL once created
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://acm-frontend.onrender.com"
+
+  # React Frontend
+  - type: web
+    name: acm-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: "./dist"
+    routes:
+      # Rewrites all routes to index.html for React Router
+      - type: rewrite
+        source: "/*"
+        destination: "/index.html"

@@ -1,53 +1,41 @@
-import { Link, NavLink } from 'react-router-dom';
-import Magnetic from './Magnetic';
-import GlitchText from './GlitchText';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="container nav-container">
-        <Magnetic>
-          <Link to="/" className="logo text-gradient" style={{ display: 'inline-block' }}>
-            <GlitchText text="ACM Shivalik" />
-          </Link>
-        </Magnetic>
+        <Link to="/" className="logo" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <img src="/images/acm-logo.svg" alt="ACM Logo" style={{ height: '40px', width: 'auto' }} />
+          <span className="text-gradient">ACM</span>
+        </Link>
         <ul className="nav-links">
           <li>
-            <Magnetic>
-              <a href="#home">Home</a>
-            </Magnetic>
+            <a href="#home">Home</a>
           </li>
           <li>
-            <Magnetic>
-              <a href="#about">About</a>
-            </Magnetic>
+            <a href="#about">About</a>
           </li>
           <li>
-            <Magnetic>
-              <a href="#events">Events</a>
-            </Magnetic>
+            <a href="#events">Events</a>
           </li>
           <li>
-            <Magnetic>
-              <a href="#domains">Domains</a>
-            </Magnetic>
+            <a href="#domains">Domains</a>
           </li>
           <li>
-            <Magnetic>
-              <a href="#team">Team</a>
-            </Magnetic>
+            <a href="#team">Team</a>
           </li>
           <li>
-            <Magnetic>
-              <a href="#contact">Contact</a>
-            </Magnetic>
+            <a href="#contact">Contact</a>
           </li>
         </ul>
-        <Magnetic>
-          <Link to="/membership" className="btn-primary">
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Link to="/member-login" className="btn-outline" style={{ padding: '8px 16px', fontSize: '14px' }}>
+            Member Login
+          </Link>
+          <Link to="/membership" className="btn-primary" style={{ padding: '8px 16px', fontSize: '14px' }}>
             Join Us
           </Link>
-        </Magnetic>
+        </div>
       </div>
     </nav>
   );
